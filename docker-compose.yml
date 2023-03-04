@@ -1,0 +1,27 @@
+version: "3.8"
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: ../docker/Dockerfile-backend
+    image: otameshi-backend:latest
+    # use Reflex to watch for changes in .go files and restart service, run command 'go run main.go'
+    command: reflex -r '\.go$$' -s go run main.go
+    # expose port:3000 from container to local machine
+    ports:
+      - "3000:3000"
+    # mount project /backend directory to container /go/src/app directory
+    volumes:
+      - ./backend:/go/src/app
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: ../docker/Dockerfile-frontend
+    image: otameshi-frontend:latest
+    # expose port:8080 from containeer to local machine
+    ports:
+      - "8080:8080"
+    # mount project /frontend directory to container /app directory
+    volumes:
+      - ./frontend:/app

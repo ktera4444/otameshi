@@ -1,0 +1,6 @@
+FROM golang:1.19
+
+# use mounted volume as source code
+WORKDIR /go/src/app
+# install Reflex for hot-reload
+RUN go install github.com/cespare/reflex@latest
